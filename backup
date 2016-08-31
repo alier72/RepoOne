@@ -20,7 +20,12 @@ curl -L http://172.17.0.3:2379/v2/keys > etcd.json
 or
 ./etcdctl --no-sync --endpoint http://172.17.0.3:2379 get /message
 
+
+Set a Value
 curl -L -X PUT http://172.17.0.3:2379/v2/keys/foo-service/container1 -d value="localhost:999" > etcd.json
+
+./etcdctl --no-sync --endpoint http://172.17.0.3:2379 set /foo-service/container2 localhost:2222
+
 
 monitor
 ./etcdctl --no-sync --endpoint http://172.17.0.3:2379 exec-watch --recursive /foo-service -- sh -c 'echo "\"$ETCD_WATCH_KEY\" key was updated to \"$ETCD_WATCH_VALUE\" value by \"$ETCD_WATCH_ACTION\" action"'
