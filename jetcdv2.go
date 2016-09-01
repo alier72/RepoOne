@@ -11,19 +11,24 @@ func main() {
 
 //exampleJSON := `{ "name": "Walter White","age": 51, "children": [ "junior","holly"],"other": {"occupation": "chemist","years": 23}}`
 
-file, err := ioutil.ReadFile("data.json")
+file, err := ioutil.ReadFile("etcd.json")
     if err != nil {
         log.Fatal(err)
     }
   v, _ := jason.NewObjectFromBytes([]byte(file))
 
-  name, _ := v.GetString("name")
-  age, _ := v.GetNumber("age")
-  occupation, _ := v.GetString("other", "occupation")
-  years, _ := v.GetNumber("other", "years")
+  action, _ := v.GetString("action")
+  //mindex, _ := v.GetNumber("node","nodes","modifiedIndex")
+  //nkey, _ := v.GetString("node","nodes", "key")
+  dirv, _ := v.GetBoolean("node", "dir")
 
-  log.Println("age:", age)
-  log.Println("name:", name)
-  log.Println("occupation:", occupation)
-  log.Println("years:", years)
+  log.Println("action:", action)
+  narray, _ := v.GetObjectArray("node","nodes")
+  for _, narray := range narray {
+  mindex, _ := narray.GetNumber("modifiedIndex")
+  log.Println("Modified Index:", mindex)
+  nkey, _ := narray.GetString("key")
+  log.Println("Node Key:", nkey)
+  }
+  log.Println("Dir:", dirv)
 }

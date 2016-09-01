@@ -15,6 +15,9 @@ while : ; do
 done
 exit 0
 
+
+Start etcd
+./etcd --advertise-client-urls 'http://0.0.0.0:2379,http://0.0.0.0:4101' --listen-client-urls 'http://0.0.0.0:2379,http://0.0.0.0:4101'
 output etcd data to file:
 curl -L http://172.17.0.3:2379/v2/keys > etcd.json
 or
@@ -37,3 +40,11 @@ etcd2 --name infra1 --initial-advertise-peer-urls http://10.0.0.101:2380 \
   --listen-client-urls http://10.0.0.101:2379,http://127.0.0.1:2379 \
   --advertise-client-urls http://10.0.0.101:2379 \
   --discovery https://discovery.etcd.io/<token>
+
+  FOR DOCKER
+
+  If you start an ubuntu container with /bin/bash then:
+  docker exec -it <containerIdOrName> bash
+
+  Also for starting an ubuntu container tty initialisation (-td triggers) is required:
+sudo docker run -p 4955:2379 -td ubuntu-je
